@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1120">
+  <title>Daily Global Tech News Scheduler</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h4"/><path d="M3 7v12a2 2 0 0 0 2 2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></symbol>
+    <symbol id="i-heartbeat" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.1.9-1.1 1.9-1.4-.5a8 8 0 0 1-1.7 1l-.2 1.5h-2.2l-.4-1.4a8 8 0 0 1-2-.1l-1 1.1-1.9-1.1.5-1.4a8 8 0 0 1-1-1.7l-1.5-.2v-2.2l1.4-.4a8 8 0 0 1 .1-2l-1.1-1 1.1-1.9 1.4.5a8 8 0 0 1 1.7-1l.2-1.5h2.2l.4 1.4a8 8 0 0 1 2 .1l1-1.1 1.9 1.1-.5 1.4a8 8 0 0 1 1 1.7l1.5.2v2.2l-1.4.4a8 8 0 0 1-.1 2Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5 8.5 8.5 0 1 0 20.5 15.5Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 12h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.6-2L20 12M4 12l2.8 5a7 7 0 0 0 11.6-2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="m13 2-3 9h7l-6 11 2-9H6z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1 0 8Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 17-5-5 5-5m8 0 5 5-5 5m-2-12-4 14"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-9"/><path d="M15 6h6v6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Zm7 13 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" aria-label="Daily Global Tech News Scheduler home">
+        <span class="brand-mark"><svg class="icon"><use href="#i-layers"/></svg></span>
+        <span><strong>Signal<span>Desk</span></strong><small>TECH INTELLIGENCE</small></span>
+      </a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard"><svg class="icon"><use href="#i-grid"/></svg>Dashboard</a>
+        <a class="nav-link" href="#latest-news"><svg class="icon"><use href="#i-news"/></svg>Latest News<span class="nav-count" id="navArticleCount">—</span></a>
+        <a class="nav-link" href="#latest-news"><svg class="icon"><use href="#i-layers"/></svg>Categories</a>
+        <a class="nav-link" href="#latest-news" id="navSearch"><svg class="icon"><use href="#i-search"/></svg>Search Articles</a>
+        <a class="nav-link" href="#briefings"><svg class="icon"><use href="#i-calendar"/></svg>Briefings</a>
+      </nav>
+      <div class="sidebar-label sidebar-label-spaced">SYSTEM</div>
+      <nav class="side-nav" aria-label="System navigation">
+        <a class="nav-link" href="#scheduler"><svg class="icon"><use href="#i-clock"/></svg>Scheduler Settings</a>
+        <a class="nav-link" href="#system-health"><svg class="icon"><use href="#i-heartbeat"/></svg>API Health<span class="health-dot" id="apiHealthDot"></span></a>
+        <a class="nav-link" href="#preferences"><svg class="icon"><use href="#i-settings"/></svg>Settings</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><div class="tip-icon"><svg class="icon"><use href="#i-spark"/></svg></div><strong>Stay ahead of the signal</strong><p>Your daily technology briefing, collected and organized automatically.</p><a href="#briefings">Explore briefings <span>→</span></a></div>
+        <div class="profile"><div class="avatar">TD</div><div><strong>Tech Desk</strong><small>Personal workspace</small></div><svg class="icon profile-more"><use href="#i-settings"/></svg></div>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Open navigation"><svg class="icon"><use href="#i-menu"/></svg></button>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong>Dashboard</strong></div>
+        <div class="topbar-actions">
+          <label class="global-search"><svg class="icon"><use href="#i-search"/></svg><input id="globalSearch" type="search" placeholder="Search articles..." aria-label="Search articles"><kbd>Ctrl K</kbd></label>
+          <button class="icon-button theme-toggle" id="themeToggle" aria-label="Switch color theme"><svg class="icon"><use href="#i-moon"/></svg></button>
+          <button class="icon-button notification-button" id="notificationButton" aria-label="Collection notifications"><svg class="icon"><use href="#i-bell"/></svg><span id="notificationDot" hidden></span></button>
+          <div class="top-divider"></div>
+          <div class="top-scheduler"><span class="status-pulse" id="topStatusPulse"></span><span id="topSchedulerStatus">Checking</span></div>
+          <div class="top-avatar">TD</div>
+        </div>
+      </header>
+
+      <main id="dashboard" class="dashboard-content">
+        <section class="welcome-row">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span>YOUR DAILY INTELLIGENCE</div><h1>Daily Global Tech <span>News Scheduler</span></h1><p class="welcome-subtitle">Your automated technology intelligence dashboard.</p></div>
+          <div class="welcome-meta"><span class="live-chip"><span class="live-dot"></span>LIVE DASHBOARD</span><span id="todayLabel">—</span></div>
+        </section>
+
+        <section class="stats-grid" aria-label="Dashboard statistics">
+          <article class="stat-card"><div class="stat-top"><span>Total Articles</span><span class="stat-icon icon-indigo"><svg class="icon"><use href="#i-news"/></svg></span></div><strong class="stat-value" id="statTotal">—</strong><div class="stat-foot"><span class="stat-foot-dot"></span>Saved in MongoDB</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Today's Articles</span><span class="stat-icon icon-cyan"><svg class="icon"><use href="#i-trend"/></svg></span></div><strong class="stat-value" id="statToday">—</strong><div class="stat-foot"><span class="stat-foot-dot cyan"></span>Collected today · UTC</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Scheduler Status</span><span class="stat-icon icon-green"><svg class="icon"><use href="#i-clock"/></svg></span></div><strong class="stat-value status-value" id="statStatus">—</strong><div class="stat-foot"><span class="stat-foot-dot" id="schedulerStatDot"></span><span id="statInterval">Schedule not loaded</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span>Last Successful Run</span><span class="stat-icon icon-violet"><svg class="icon"><use href="#i-rotate"/></svg></span></div><strong class="stat-value stat-time" id="statLastSuccess">—</strong><div class="stat-foot" id="statLastSuccessHint">Actual backend timestamp</div></article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel scheduler-panel" id="scheduler">
+            <div class="panel-heading"><div><div class="section-kicker">AUTOMATION</div><h2>Automated News Scheduler</h2><p>Choose how often to collect fresh technology news.</p></div><span class="scheduler-badge" id="schedulerBadge"><span class="status-pulse"></span><span>Checking</span></span></div>
+            <div class="schedule-options" role="radiogroup" aria-label="News collection interval">
+              <button class="schedule-card" data-interval="1_minute" role="radio" aria-checked="false"><span class="schedule-icon icon-indigo"><svg class="icon"><use href="#i-zap"/></svg></span><strong>1 Minute</strong><small>Rapid testing</small></button>
+              <button class="schedule-card" data-interval="5_minutes" role="radio" aria-checked="false"><span class="schedule-icon icon-cyan"><svg class="icon"><use href="#i-rotate"/></svg></span><strong>5 Minutes</strong><small>Frequent updates</small></button>
+              <button class="schedule-card" data-interval="1_hour" role="radio" aria-checked="false"><span class="schedule-icon icon-violet"><svg class="icon"><use href="#i-cloud"/></svg></span><strong>1 Hour</strong><small>Hourly collection</small></button>
+              <button class="schedule-card" data-interval="1_day" role="radio" aria-checked="false"><span class="schedule-icon icon-green"><svg class="icon"><use href="#i-calendar"/></svg></span><strong>1 Day</strong><small>Daily collection</small></button>
+            </div>
+            <div class="scheduler-actions">
+              <button class="button button-primary" id="startScheduler"><svg class="icon"><use href="#i-play"/></svg>Start Scheduler</button>
+              <button class="button button-secondary" id="stopScheduler"><svg class="icon"><use href="#i-stop"/></svg>Stop Scheduler</button>
+              <button class="button button-quiet" id="applySchedule"><svg class="icon"><use href="#i-settings"/></svg>Apply Schedule</button>
+              <button class="button button-quiet run-now" id="runNow"><svg class="icon"><use href="#i-zap"/></svg>Run Now</button>
+            </div>
+            <div class="scheduler-details">
+              <div class="scheduler-detail"><span>Current interval</span><strong id="currentInterval">—</strong></div>
+              <div class="scheduler-detail"><span>Last execution</span><strong id="lastRun">—</strong></div>
+              <div class="scheduler-detail"><span>Next scheduled run</span><strong id="nextRun">—</strong></div>
+            </div>
+            <div class="next-run-track"><div class="track-label"><span>Next collection</span><strong id="countdown">Waiting for scheduler</strong></div><div class="progress-track"><span id="nextRunProgress"></span></div></div>
+            <div class="scheduler-message" id="schedulerMessage" role="status" aria-live="polite"></div>
+          </article>
+
+          <article class="panel activity-panel">
+            <div class="panel-heading activity-heading"><div><div class="section-kicker">SYSTEM LOG</div><h2>Recent Activity</h2></div><span class="activity-live"><span class="live-dot"></span> LIVE</span></div>
+            <div class="activity-list" id="activityList"><div class="activity-empty">Loading recent activity…</div></div>
+            <a class="activity-footer" href="#system-health">View system health <svg class="icon"><use href="#i-arrow"/></svg></a>
+          </article>
+        </section>
+
+        <section class="panel news-panel" id="latest-news">
+          <div class="news-heading"><div><div class="section-kicker">THE LATEST SIGNAL</div><h2>Latest Technology News</h2><p>Curated stories from your connected news sources.</p></div><div class="news-refresh-meta"><span class="refresh-indicator" id="refreshIndicator"></span><span>Last UI refresh <strong id="lastUiRefresh">—</strong></span><button class="icon-button refresh-button" id="refreshArticles" aria-label="Refresh saved articles"><svg class="icon"><use href="#i-rotate"/></svg></button></div></div>
+          <div class="news-toolbar">
+            <div class="category-filters" id="categoryFilters" aria-label="Filter by category">
+              <button class="filter-chip selected" data-category="">All articles</button>
+              <button class="filter-chip" data-category="AI">AI</button>
+              <button class="filter-chip" data-category="Cybersecurity">Cybersecurity</button>
+              <button class="filter-chip" data-category="Cloud">Cloud</button>
+              <button class="filter-chip" data-category="Programming">Python</button>
+              <button class="filter-chip" data-category="Software Development">Software</button>
+              <button class="filter-chip" data-category="Data Analytics">Data Science</button>
+              <button class="filter-chip" data-category="Startups">Startups</button>
+            </div>
+            <label class="news-search"><svg class="icon"><use href="#i-search"/></svg><input id="newsSearch" type="search" placeholder="Filter stories..." aria-label="Filter news stories"></label>
+          </div>
+          <div class="news-grid" id="newsList" aria-live="polite"><div class="news-skeleton"></div><div class="news-skeleton"></div><div class="news-skeleton"></div></div>
+          <div class="news-empty" id="newsEmpty" hidden><span class="empty-icon"><svg class="icon"><use href="#i-news"/></svg></span><strong>No articles found</strong><p id="emptyMessage">There are no saved stories matching this view yet.</p></div>
+          <div class="news-error" id="newsError" hidden></div>
+          <div class="news-pagination"><span id="resultCount">Loading saved articles…</span><button class="button button-secondary load-more" id="loadMore" hidden>Load more articles</button></div>
+        </section>
+
+        <section class="lower-grid">
+          <article class="panel briefing-panel" id="briefings"><div class="panel-heading"><div><div class="section-kicker">YOUR DAILY READ</div><h2>Daily Briefings</h2><p>Concise technology intelligence, organized by day.</p></div><span class="panel-icon"><svg class="icon"><use href="#i-calendar"/></svg></span></div><div id="briefingList" class="briefing-list"><div class="activity-empty">Loading briefings…</div></div></article>
+          <article class="panel health-panel" id="system-health"><div class="panel-heading"><div><div class="section-kicker">CONNECTIONS</div><h2>System Health</h2><p>Live status from the application API.</p></div><span class="panel-icon"><svg class="icon"><use href="#i-heartbeat"/></svg></span></div><div class="health-row"><span><i class="health-check" id="healthApiCheck"></i>Flask API</span><strong id="healthApiStatus">Checking</strong></div><div class="health-row"><span><i class="health-check" id="healthDatabaseCheck"></i>MongoDB</span><strong id="healthDatabaseStatus">Checking</strong></div><div class="health-row"><span><i class="health-check" id="healthProviderCheck"></i>News provider</span><strong id="healthProviderStatus">Checking</strong></div><div class="health-footnote" id="healthMessage">Health is reported by the backend; credentials are never shown here.</div></article>
+        </section>
+        <footer class="dashboard-footer" id="preferences"><span><span class="footer-mark">S</span> SignalDesk <span class="footer-separator">·</span> Daily Global Tech News Scheduler</span><span>News API polling reads saved articles only; it never starts a collection.</span></footer>
+      </main>
+    </div>
+    <div class="sidebar-scrim" id="sidebarScrim"></div>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
